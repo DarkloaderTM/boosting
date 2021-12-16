@@ -4,5 +4,6 @@ Read Config thoroughly
 
 add following items to your inventory:
 
-pixellaptop
-disabler
+-- pixellaptop
+
+-- disabler
