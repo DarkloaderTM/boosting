@@ -783,19 +783,6 @@ AddEventHandler('onResourceStart', function(resource)
   end
 end)
 
--- https://discord.gg/e2c8ryeQKG
--- https://discord.gg/e2c8ryeQKG
--- https://discord.gg/e2c8ryeQKG
--- https://discord.gg/e2c8ryeQKG
--- https://discord.gg/e2c8ryeQKG
--- https://discord.gg/e2c8ryeQKG
--- https://discord.gg/e2c8ryeQKG
--- https://discord.gg/e2c8ryeQKG
--- https://discord.gg/e2c8ryeQKG
--- https://discord.gg/e2c8ryeQKG
--- https://discord.gg/e2c8ryeQKG
--- NOPICKLES
-
 RegisterNetEvent("bropixel-boosting:ContractDone")
 AddEventHandler("bropixel-boosting:ContractDone" , function()
   if CompletedTask then
@@ -809,8 +796,9 @@ AddEventHandler("bropixel-boosting:ContractDone" , function()
     TriggerServerEvent("bropixel-boosting:removeblip")
     Citizen.Wait(math.random(25000,35000))
     TriggerServerEvent('bropixel-boosting:finished')
-    BNEBoosting['functions']. AddBne(VehiclePrice)
-    print(VehiclePrice)
+	local niceprice = VehiclePrice * Config['General']["BNErewardmultiplier"]
+    BNEBoosting['functions'].AddBne(niceprice)
+    print(nice)
     table.remove(Contracts , startedcontractid)
     started = false
     SetEntityAsMissionEntity(Vehicle,true,true)
@@ -1271,18 +1259,3 @@ AddEventHandler('XZCore:Client:OnPlayerLoaded', function()
     end
   end)
 end)
-
-
-
-  -- https://discord.gg/e2c8ryeQKG
--- https://discord.gg/e2c8ryeQKG
--- https://discord.gg/e2c8ryeQKG
--- https://discord.gg/e2c8ryeQKG
--- https://discord.gg/e2c8ryeQKG
--- https://discord.gg/e2c8ryeQKG
--- https://discord.gg/e2c8ryeQKG
--- https://discord.gg/e2c8ryeQKG
--- https://discord.gg/e2c8ryeQKG
--- https://discord.gg/e2c8ryeQKG
--- https://discord.gg/e2c8ryeQKG
--- NOPICKLES

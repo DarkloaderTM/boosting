@@ -9,6 +9,7 @@ Config['General'] = {
     ["MinPolice"] = 0,
     ["UseNotificationsInsteadOfEmails"] = true, -- this is most likely for esx users , cuz they use bunsh of difirent phones , leave as false if you use qbus or np bases
     ["PoliceNeedLaptopToseeNotifications"] = false,
+	["BNErewardmultiplier"] = math.random(12, 15) / 10,
 }
 
 

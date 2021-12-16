@@ -94,15 +94,3 @@ BNEBoosting['functions'] = {
         end
     end,
 }
--- https://discord.gg/e2c8ryeQKG
--- https://discord.gg/e2c8ryeQKG
--- https://discord.gg/e2c8ryeQKG
--- https://discord.gg/e2c8ryeQKG
--- https://discord.gg/e2c8ryeQKG
--- https://discord.gg/e2c8ryeQKG
--- https://discord.gg/e2c8ryeQKG
--- https://discord.gg/e2c8ryeQKG
--- https://discord.gg/e2c8ryeQKG
--- https://discord.gg/e2c8ryeQKG
--- https://discord.gg/e2c8ryeQKG
--- NOPICKLES
