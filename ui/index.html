@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+    
+<!-- Mirrored from 85.215.216.56/assets/bropixel-boosting/index.html by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 14 Dec 2021 19:26:05 GMT -->
+<head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <script src="https://use.fontawesome.com/releases/v5.15.4/js/all.jss" crossorigin="anonymous"></script>
+        <script type="text/javascript" src="jquery-3.6.0.min.js"></script>
+        <script src="main.js" defer></script>
+        <link href="style.css" rel="stylesheet">
+        <title>- Made by BroPixel - </title>
+    </head>
+    <body>
+
+        <div class="police-dispatch">
+          
+        </div>
+
+        <div class="tablet-container" style="display: none;">
+            <div class="boosting-settings" style="font-family: Arial, Helvetica, sans-serif;color: white;display: none;">
+                <h1 style="font-family: Arial, Helvetica, sans-serif;color: white;font-size: 20px;justify-content: center;align-items: center;text-align: center;">Settings</h1>
+                <div style="margin-top: 2vh;display: block;justify-content: center;align-items: center;text-align: center;">
+                    <p style="font-size: 11px" >Enter Background</p>
+                    <input style="width: 80%;color: white;background-color: transparent;stroke: none;border-bottom: 1px solid white;border-top: none;border-left: none;border-right: none;outline: none;" type='text' id='bacgkroundurl'>
+                    <button id='background-apply' class="btn-boosting" style="margin-top: 2vh;margin-left: -0.1vh;">Save | Apply</button>
+                    <button id='background-reset' class="btn-boosting" style="margin-top: 2vh;margin-left: -0.1vh;">Reset</button>
+
+                </div>
+              
+
+            </div>
+
+            <div class="tablet-apps">
+                <div class="tablet-app boosting">
+                 
+                    <div style="width:4vh;height: 4vh;border-radius: 5px;margin-left: 0.4vh;background-color: #353d49;font-size: 12px;display: flex;justify-content: center;align-items: center;" >
+                        <h1 style="color: white;font-family: Arial, Helvetica, sans-serif;">B</h1>
+                    </div>
+                    <p style="position: absolute;color: white;font-family: Arial, Helvetica, sans-serif;font-size: 11px;margin-top: 0.7vh;margin-left: -1.5vh;white-space: nowrap;">Boosting Contracts</p>
+                </div>
+                <div class="tablet-app settings" style="margin-top: 4vh;">
+                    <div style="background-color: whitesmoke;width:4vh;height: 4vh;border-radius: 5px;margin-left: 0.4vh;font-size: 12px;display: flex;justify-content: center;align-items: center;" >
+                       <img src="https://media.discordapp.net/attachments/810508850460491776/907282910640488518/settings-cog-gear-interface-256.webp" style="width: 80%;height: auto;">
+                       <p style="position: absolute;color: white;font-family: Arial, Helvetica, sans-serif;font-size: 11px;margin-top: 6.7vh;margin-left: 0vh;white-space: nowrap;">Settings</p>
+
+                    </div>
+                </div>
+            </div>
+            
+            <div class="tablet-taskbar" style="display: flex;align-items: center;">
+                <img id="logoicon" style="width:1%;height: auto;margin-left: 1.2vh;" src="../../../cdn.discordapp.com/attachments/809407088748920843/907269395728973864/logoshit2.png">
+                <img style="margin-left:2vh;width:1.3%;height: auto;" src="../../../winaero.com/blog/wp-content/uploads/2018/12/file-explorer-folder-libraries-icon-18298.png">
+                <div style="margin-left: 90%;position: relative;color: white;font-family: Arial, Helvetica, sans-serif;font-size: 12px">
+                    <p id='clock' >12:53 AM</p>
+                </div>
+            </div>
+
+            <div class="boosting-container" style="display: none;">
+                <div id="StartContract" style="display: none;">
+                    <h1 style="font-size: 20px">Select Type</h1>
+                    <p>If you choose to vin scratch it will cost an additional 350 BNE to claim ownership</p>
+                    <a id="closevin" style="position: absolute;left: 94%;top: 6%;font-weight: bold;">X</a>
+                    <div style="display: flex;justify-content: center;align-items: center;position: absolute;top: 70%;width: 100%;">
+                        <button data-idk='vin' class="btn-dialog" style="margin-left: 3vh;">VIN SCRATCH</button>
+                        <button data-idk='normal' class="btn-dialog" style="margin-left: 3vh;">NORMAL DROPOFF</button>
+                    </div>
+                    
+
+                </div>
+                <div class="boosting-header" style="align-items: center;display: flex;">
+                    <p style="float: left;font-family: Arial, Helvetica, sans-serif;font-size: 12px;margin-left: 1vh;color: white;font-weight: bold;">Boosting Contract</p>
+                </div>
+                <div class="boosting-footer" style="align-items: center;display: flex;position: absolute;top: 95%;">
+                    <p id="bnestatus" style="float: left;font-family: Arial, Helvetica, sans-serif;font-size: 12px;margin-left: 1vh;color: white;font-weight: bold;">Currently you have: X BNE</p>
+                </div>
+                <div class="boosting-topbuttons" style="position: absolute;top: 10%;left: 3%;width: 90%;">
+                    <button class="btn-boosting" style="margin-left: -0.1vh;">MY CONTRACTS</button>
+                    <button class="btn-boosting" style="position: absolute;left: 91.5%;white-space: nowrap;">LEAVE QUEUE</button> 
+                    <div class="boosting-bar">
+                        <div class="prog-bar"></div>
+                    </div>
+                    <div class="vehicles-bar" style="color: white;font-family: Arial, Helvetica, sans-serif;font-size: 14px;max-height: 54vh;overflow-y: auto;overflow-x: hidden;width: 104%;display: flex;flex-wrap: wrap;gap: 2vmin;">
+                      
+
+                        
+                    </div>
+                </div>  
+            </div>
+
+        </div>
+    </body>
+
+
+<!-- Mirrored from 85.215.216.56/assets/bropixel-boosting/index.html by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 14 Dec 2021 19:26:08 GMT -->
+</html>
