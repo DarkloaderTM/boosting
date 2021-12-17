@@ -1,5 +1,9 @@
 # Credits to bropixel and nopickles.
 
+##DEPENDICIES:
+
+https://github.com/DarkloaderTM/hackingminigame
+
 ## Read Config thoroughly
 
 ### if using esx or np-base following items to your inventory: 
