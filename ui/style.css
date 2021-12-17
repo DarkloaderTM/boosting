@@ -11,7 +11,7 @@ body {
   height: 85vh;
   width: 150vh;
   border: 4px solid #212428;
-  background-image: url(../../../cdna.artstation.com/p/assets/images/images/034/272/072/large/mikhail-sharov-np-trailer-cover-1080218f.jpg?1611856410);
+  background-image: url("images/npbackground.png");
   background-repeat: no-repeat;
   background-size: cover;
   background-position: 50% 50%;

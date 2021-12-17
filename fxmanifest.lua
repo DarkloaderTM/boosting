@@ -16,5 +16,6 @@ server_scripts {
 ui_page 'ui/index.html'
 
 files {
-  'ui/*'
+  'ui/*',
+  'ui/images/*'
 }

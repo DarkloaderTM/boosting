@@ -85,8 +85,8 @@ Config['Utils'] = {
         ["get_vehicle_class"] = "boostingclass", -- This Command will print (F8) the vehicle class of the one ur sitting in
     },
     ["Laptop"] = {
-        ["LogoUrl"] = "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5f/Windows_logo_-_2012.svg/1200px-Windows_logo_-_2012.svg.png", 
-        ["DefaultBackground"] = "https://wallpaperdb.net/full/dwd-1367.jpg",
+        ["LogoUrl"] = "images/winlogo.png", 
+        ["DefaultBackground"] = "images/background.png",
         ["CopNotifyLength"] = 5000, -- Time in (ms) of the police Notify length
     },
 }

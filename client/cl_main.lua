@@ -366,7 +366,7 @@ AddEventHandler("bropixel-boosting:DisablerUsed" , function()
     elseif(vinstarted == false) then
       if(DisablerTimes < 4) then
         DisablerUsed = true
-        local minigame = exports['bropixel-minigame']:Open()   
+        local minigame = exports['hackingminigame']:Open()   
         if(minigame == true and DisablerTimes < 4) then
           if(DisablerTimes == 3) then
             DisablerTimes = DisablerTimes + 1
@@ -399,7 +399,7 @@ AddEventHandler("bropixel-boosting:DisablerUsed" , function()
   else if vinstarted == true then
     if(DisablerTimes < 6) then
       DisablerUsed = true
-      local minigame = exports['bropixel-minigame']:Open()   
+      local minigame = exports['hackingminigame']:Open()   
       if(minigame == true) then
         Config['Utils']["Blips"]["BlipUpdateTime"] = Config['Utils']["Blips"]["BlipUpdateTime"] + 5000
         DisablerTimes = DisablerTimes + 1
