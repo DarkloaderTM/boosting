@@ -1,6 +1,6 @@
 # Credits to bropixel and nopickles.
 
-##DEPENDICIES:
+## DEPENDICIES:
 
 https://github.com/DarkloaderTM/hackingminigame
 
