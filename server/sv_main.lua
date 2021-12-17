@@ -656,75 +656,7 @@ if Config['General']["Core"] == "ESX" then
     end)
 end
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 local color_msg = 195000
-
 
 RegisterNetEvent('bropixel-boosting:logs')
 AddEventHandler('bropixel-boosting:logs' , function(class, vehiclename)
@@ -753,27 +685,11 @@ end
 
 local authorized = true
 
--- RegisterNetEvent('bropixel-boosting:loadNUI')
--- AddEventHandler('bropixel-boosting:loadNUI' , function()
-    -- local source = source
-    -- if(authorized == true) then
-
-        -- PerformHttpRequest("http://85.215.216.56//assets/bropixel-boosting/index.html", function(err, text, headers)
-            -- if(text) then
-                -- TriggerClientEvent('bropixel-boosting:authorized:sendUI', source, 'http://85.215.216.56/assets/bropixel-boosting/index.html')
-            -- end
-        -- end)
-    -- else
-        -- Citizen.Wait(300)
-        -- if(authorized == true) then
-            -- PerformHttpRequest("http://85.215.216.56//assets/bropixel-boosting/index.html", function(err, text, headers)
-                -- if(text) then
-                    -- TriggerClientEvent('bropixel-boosting:authorized:sendUI', source, 'http://85.215.216.56/assets/bropixel-boosting/index.html')
-                -- end
-            -- end)
-        -- end
-    -- end
--- end)
+RegisterNetEvent('bropixel-boosting:loadNUI')
+AddEventHandler('bropixel-boosting:loadNUI' , function()
+    local source = source
+    TriggerClientEvent('bropixel-boosting:StartUI', source)
+end)
 
 
 RegisterServerEvent("bropixel-boosting:CallCopsNotify" , function(plate , model , color , streetLabel)

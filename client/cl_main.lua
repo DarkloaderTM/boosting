@@ -51,12 +51,12 @@ Contracts = {}
 
 
 
--- AddEventHandler("onClientResourceStart", function(resource)
-  -- if (resource == GetCurrentResourceName()) then
-    -- Citizen.Wait(500)
-    -- return TriggerServerEvent("bropixel-boosting:loadNUI")
-  -- end
--- end)
+AddEventHandler("onClientResourceStart", function(resource)
+  if (resource == GetCurrentResourceName()) then
+    Citizen.Wait(500)
+    return TriggerServerEvent("bropixel-boosting:loadNUI")
+  end
+end)
 
 
 
@@ -889,14 +889,8 @@ end)
 
 
 
-RegisterNetEvent("bropixel-boosting:authorized:sendUI")
-AddEventHandler("bropixel-boosting:authorized:sendUI"  , function(ui)
-  -- print(NUIPAGE)
-  -- if(NUIPAGE == nil) then
-    -- print('wa')
-    -- NUIPAGE = ui
-  -- end
-  -- SendNUIMessage({type = 'ui' , auth = NUIPAGE})
+RegisterNetEvent("bropixel-boosting:StartUI")
+AddEventHandler("bropixel-boosting:StartUI"  , function()
   NuiLoaded = true
 end)
 
