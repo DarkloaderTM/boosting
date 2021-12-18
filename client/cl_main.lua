@@ -240,6 +240,7 @@ AddEventHandler("boosting:StartContract" , function(id , vin)
               started = true
           end
           startedcontractid = v.id
+        if not Config['General']["UseNotificationsInsteadOfEmails"] then
           if Config['General']["Core"] == "QBCORE" then
               CreateListEmail()
           elseif Config['General']["Core"] == "ESX" then
@@ -247,6 +248,7 @@ AddEventHandler("boosting:StartContract" , function(id , vin)
           elseif Config['General']["Core"] == "NPBASE" then
               CreateListEmailNPBASE()
           end
+        end
       end
   end
 end)
