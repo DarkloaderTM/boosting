@@ -1094,7 +1094,7 @@ local function AddVehicleToGarage()
   local DiplayName = GetDisplayNameFromVehicleModel(EntityModel)
   if Config['General']["Core"] == "QBCORE" then
     CoreName.Functions.Notify("Vin scratch complete!", "success", 3500)   
-    local vehicleProps = QBCore.Functions.GetVehicleProperties(Vehicle)	
+    local vehicleProps = CoreName.Functions.GetVehicleProperties(Vehicle)	
     TriggerServerEvent('boosting:AddVehicle',string.lower(DiplayName) ,Contracts[startedcontractid].plate, vehicleProps)
   elseif Config['General']["Core"] == "ESX" then
       ShowNotification("Vin scratch complete!",'success')
