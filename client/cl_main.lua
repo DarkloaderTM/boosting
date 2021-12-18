@@ -54,7 +54,7 @@ Contracts = {}
 AddEventHandler("onClientResourceStart", function(resource)
   if (resource == GetCurrentResourceName()) then
     Citizen.Wait(500)
-    return TriggerServerEvent("bropixel-boosting:loadNUI")
+    return TriggerServerEvent("boosting:loadNUI")
   end
 end)
 
@@ -111,10 +111,15 @@ function CreateVeh(model , coord, id)
 end
 
 
+RegisterNetEvent('boosting:ReceiveContract')
+AddEventHandler('boosting:ReceiveContract' , function(contract)
+     table.insert(Contracts, contract)
+end)
 
 
-RegisterNetEvent('bropixel-boosting:CreateContract')
-AddEventHandler('bropixel-boosting:CreateContract' , function(shit)
+
+RegisterNetEvent('boosting:CreateContract')
+AddEventHandler('boosting:CreateContract' , function(shit)
   local num = math.random(#Config.Vehicles)
   local dick = Config.Vehicles[num].vehicle
   local coord = Config.VehicleCoords[math.random(#Config.VehicleCoords)]
@@ -128,7 +133,7 @@ AddEventHandler('bropixel-boosting:CreateContract' , function(shit)
     shit = true
   end
   if Config['General']["Core"] == "QBCORE" then
-    CoreName.Functions.TriggerCallback('bropixel-boosting:GetExpireTime', function(result)
+    CoreName.Functions.TriggerCallback('boosting:GetExpireTime', function(result)
       if result then
         local data = {
           vehicle = dick,
@@ -157,7 +162,7 @@ AddEventHandler('bropixel-boosting:CreateContract' , function(shit)
       end
     end)
   elseif Config['General']["Core"] == "ESX" then
-    ESX.TriggerServerCallback('bropixel-boosting:GetExpireTime', function(result)
+    ESX.TriggerServerCallback('boosting:GetExpireTime', function(result)
       if result then
         local data = {
           vehicle = dick,
@@ -186,7 +191,7 @@ AddEventHandler('bropixel-boosting:CreateContract' , function(shit)
       end
     end)
   elseif Config['General']["Core"] == "NPBASE" then
-    local ExpireTime = RPC.execute("bropixel-boosting:GetExpireTime")
+    local ExpireTime = RPC.execute("boosting:GetExpireTime")
 
     if ExpireTime then
       local data = {
@@ -220,8 +225,8 @@ end)
 
 
 
-RegisterNetEvent("bropixel-boosting:StartContract")
-AddEventHandler("bropixel-boosting:StartContract" , function(id , vin)
+RegisterNetEvent("boosting:StartContract")
+AddEventHandler("boosting:StartContract" , function(id , vin)
   for k,v in ipairs(Contracts) do
       if(tonumber(v.id) == tonumber(id)) then
           local extracoors = v.coords
@@ -247,8 +252,8 @@ AddEventHandler("bropixel-boosting:StartContract" , function(id , vin)
 end)
 
 
-RegisterNetEvent("bropixel-boosting:DeleteContract")
-AddEventHandler("bropixel-boosting:DeleteContract" , function(id)
+RegisterNetEvent("boosting:DeleteContract")
+AddEventHandler("boosting:DeleteContract" , function(id)
   for k,v in ipairs(Contracts) do
     if(tonumber(v.id) == tonumber(id)) then
       table.remove(Contracts, k)
@@ -258,18 +263,87 @@ AddEventHandler("bropixel-boosting:DeleteContract" , function(id)
   end
 end)
 
+RegisterNetEvent("boosting:DeleteAllContracts")
+AddEventHandler("boosting:DeleteAllContracts" , function()
+  for k,v in ipairs(Contracts) do
+      table.remove(Contracts, k)
+      started = false
+      DeleteCircle()
+  end
+end)
+
+RegisterNUICallback("transfercontract", function(data)
+ if Config['General']["Core"] == "QBCORE" then
+  CoreName.Functions.TriggerCallback('boosting:getusercontracts', function(usercontracts)
+  count = 0
+  for x, y in ipairs(usercontracts) do
+  count = count + 1
+  end
+  for k,v in ipairs(Contracts) do
+    if v.id == data.contract.id then
+	  local newid = count + 1
+      local contract = {
+        vehicle = GetDisplayNameFromVehicleModel(v.vehicle),
+        price = v.price,
+        owner = v.owner,
+        type = v.type,
+        expires = '6 Hours',
+        id = newid,
+        started = v.started,
+        vin = v.vin
+      }
+    TriggerServerEvent("boosting:transfercontract", contract, data.target)
+	table.remove(Contracts, v.id)
+    end
+   end
+  end, data.target)
+ elseif Config['General']["Core"] == "ESX" then
+  ESX.TriggerServerCallback('boosting:getusercontracts', function(usercontracts)
+  count = 0
+  for x, y in ipairs(usercontracts) do
+  count = count + 1
+  end
+  for k,v in ipairs(Contracts) do
+    if v.id == data.contract.id then
+	  local newid = count + 1
+      local contract = {
+        vehicle = GetDisplayNameFromVehicleModel(v.vehicle),
+        price = v.price,
+        owner = v.owner,
+        type = v.type,
+        expires = '6 Hours',
+        id = newid,
+        started = v.started,
+        vin = v.vin
+      }
+    TriggerServerEvent("boosting:transfercontract", contract, data.target)
+	table.remove(Contracts, v.id)
+    end
+   end
+  end, data.target)
+ end
+end)
+
+RegisterNUICallback("joinBoostQueue", function()
+  TriggerServerEvent("boosting:joinQueue")
+end)
+
+RegisterNUICallback('leaveBoostQueue', function()
+  TriggerServerEvent('boosting:leaveQueue')
+  --TriggerEvent('boosting:DeleteAllContracts')
+end)
 
 RegisterNUICallback('dick', function(data)
   if Config['General']["Core"] == "QBCORE" then
     if Config['General']["MinPolice"] == 0 then
-      TriggerEvent("bropixel-boosting:StartContract" , data.id)
+      TriggerEvent("boosting:StartContract" , data.id)
       Contracts[data.id].started = true
       SetNuiFocus(false ,false)
     else
-      CoreName.Functions.TriggerCallback('bropixel-boosting:server:GetActivity', function(result)
+      CoreName.Functions.TriggerCallback('boosting:server:GetActivity', function(result)
 	  if(tonumber(BNEBoosting['functions'].GetCurrentBNE().bne) >= tonumber(data.price)) then
         if result >= Config['General']["MinPolice"] then
-          TriggerEvent("bropixel-boosting:StartContract" , data.id)
+          TriggerEvent("boosting:StartContract" , data.id)
           Contracts[data.id].started = true
           SetNuiFocus(false ,false)
         else
@@ -283,11 +357,11 @@ RegisterNUICallback('dick', function(data)
     end)  
    end
   elseif Config['General']["Core"] == "ESX" then
-    ESX.TriggerServerCallback('bropixel-boosting:server:GetActivity', function(result)
+    ESX.TriggerServerCallback('boosting:server:GetActivity', function(result)
 	if(tonumber(BNEBoosting['functions'].GetCurrentBNE().bne) >= tonumber(data.price)) then
       if result >= Config['General']["MinPolice"] then
         BNEBoosting['functions'].RemoveBNE(tonumber(data.price))	  
-        TriggerEvent("bropixel-boosting:StartContract" , data.id)
+        TriggerEvent("boosting:StartContract" , data.id)
         Contracts[data.id].started = true
         SetNuiFocus(false ,false)
       else
@@ -302,7 +376,7 @@ RegisterNUICallback('dick', function(data)
   elseif Config['General']["Core"] == "NPBASE" then
    if(tonumber(BNEBoosting['functions'].GetCurrentBNE().bne) >= tonumber(data.price)) then
     if exports[Config['CoreSettings']["NPBASE"]["HandlerScriptName"]]:isPed("countpolice") >= Config['General']["MinPolice"] then
-      TriggerEvent("bropixel-boosting:StartContract" , data.id)
+      TriggerEvent("boosting:StartContract" , data.id)
       Contracts[data.id].started = true
       SetNuiFocus(false ,false)
     else
@@ -318,7 +392,7 @@ end)
 
 
 RegisterNUICallback('decline', function(data)
-  TriggerEvent("bropixel-boosting:DeleteContract" , data.id)
+  TriggerEvent("boosting:DeleteContract" , data.id)
   -- SetNuiFocus(false ,false)
 end)
 
@@ -331,7 +405,7 @@ RegisterNUICallback('vin', function(data)
   if(tonumber(BNEBoosting['functions'].GetCurrentBNE().bne) >= tonumber(Config['Utils']["VIN"]["BNEPrice"])) then
     Contracts[data.id].started = true
     BNEBoosting['functions'].RemoveBNE(Config['Utils']["VIN"]["BNEPrice"])
-    TriggerEvent("bropixel-boosting:StartContract" , data.id , true)
+    TriggerEvent("boosting:StartContract" , data.id , true)
   else
     if Config['General']["Core"] == "QBCORE" then
       CoreName.Functions.Notify(Config['Utils']["Notifications"]["NotEnoughBNE"], "error", 3500)    
@@ -351,8 +425,8 @@ RegisterNUICallback('updateurl' , function(data)
 end)
 
 
-RegisterNetEvent("bropixel-boosting:DisablerUsed")
-AddEventHandler("bropixel-boosting:DisablerUsed" , function()
+RegisterNetEvent("boosting:DisablerUsed")
+AddEventHandler("boosting:DisablerUsed" , function()
   if OnTheDropoffWay then
     local Class = Contracts[startedcontractid].type 
     if (Config['Utils']["Contracts"]["DisableTrackingOnDCB"]) and (Class == "D" or Class == "C" or Class == "B") then
@@ -371,7 +445,7 @@ AddEventHandler("bropixel-boosting:DisablerUsed" , function()
           if(DisablerTimes == 3) then
             DisablerTimes = DisablerTimes + 1
             CallingCops = false
-            TriggerServerEvent("bropixel-boosting:removeblip")
+            TriggerServerEvent("boosting:removeblip")
             if Config['General']["Core"] == "QBCORE" then
               CoreName.Functions.Notify(Config['Utils']["Notifications"]["TrackerRemoved"], "success", 3500)    
             elseif Config['General']["Core"] == "ESX" then
@@ -382,7 +456,7 @@ AddEventHandler("bropixel-boosting:DisablerUsed" , function()
           elseif(DisablerTimes < 3) then
             Config['Utils']["Blips"]["BlipUpdateTime"] = 7000
             DisablerTimes = DisablerTimes + 1
-            TriggerServerEvent("bropixel-boosting:SetBlipTime")
+            TriggerServerEvent("boosting:SetBlipTime")
             if Config['General']["Core"] == "QBCORE" then
               CoreName.Functions.Notify(Config['Utils']["Notifications"]["SuccessHack"], "success", 3500)    
             elseif Config['General']["Core"] == "ESX" then
@@ -403,7 +477,7 @@ AddEventHandler("bropixel-boosting:DisablerUsed" , function()
       if(minigame == true) then
         Config['Utils']["Blips"]["BlipUpdateTime"] = Config['Utils']["Blips"]["BlipUpdateTime"] + 5000
         DisablerTimes = DisablerTimes + 1
-        TriggerServerEvent("bropixel-boosting:SetBlipTime")
+        TriggerServerEvent("boosting:SetBlipTime")
         if Config['General']["Core"] == "QBCORE" then
           CoreName.Functions.Notify(Config['Utils']["Notifications"]["SuccessHack"], "success", 3500)    
         elseif Config['General']["Core"] == "ESX" then
@@ -415,7 +489,7 @@ AddEventHandler("bropixel-boosting:DisablerUsed" , function()
     else
       if(DisablerTimes == 6) then
         CallingCops = false
-        TriggerServerEvent("bropixel-boosting:removeblip")
+        TriggerServerEvent("boosting:removeblip")
         CanUseComputer = true
         if Config['General']["Core"] == "QBCORE" then
           CoreName.Functions.Notify(Config['Utils']["Notifications"]["TrackerRemovedVINMission"]["VINMission"], "success", 3500)    
@@ -443,8 +517,8 @@ end)
 
 local NuiLoaded = false
 
-RegisterNetEvent("bropixel-boosting:DisplayUI")
-AddEventHandler("bropixel-boosting:DisplayUI" , function()
+RegisterNetEvent("boosting:DisplayUI")
+AddEventHandler("boosting:DisplayUI" , function()
 
   if NuiLoaded then      
     for k,v in ipairs(Contracts) do
@@ -464,7 +538,20 @@ AddEventHandler("bropixel-boosting:DisplayUI" , function()
       URL =  BNEBoosting['functions'].GetCurrentBNE().back
     end
     SetNuiFocus(true ,true)
-    SendNUIMessage({show = 'true' , logo = Config['Utils']["Laptop"]["LogoUrl"] , background = URL, time = GetClockHours()..":"..GetClockMinutes(), BNE = BNEBoosting['functions'].GetCurrentBNE().bne , defaultback = Config['Utils']["Laptop"]["DefaultBackground"]})
+	Timehours = tostring(GetClockHours())
+	Timeminutes = tostring(GetClockMinutes())
+	if (#Timehours == 1) then
+	realtimehours = '0'..GetClockHours()
+	else
+	realtimehours = GetClockHours()
+	end
+	if (#Timeminutes == 1) then
+	realtimeminutes = '0'..GetClockMinutes()
+	else
+	realtimeminutes = GetClockMinutes()
+	end
+    timetosend = realtimehours..":"..realtimeminutes
+    SendNUIMessage({show = 'true' , logo = Config['Utils']["Laptop"]["LogoUrl"] , background = URL, time = timetosend, BNE = BNEBoosting['functions'].GetCurrentBNE().bne , defaultback = Config['Utils']["Laptop"]["DefaultBackground"]})
   else
     if Config['General']["Core"] == "QBCORE" then
       CoreName.Functions.Notify(Config['Utils']["Notifications"]["UiStillLoadingMsg"], "error", 3500)    
@@ -671,14 +758,14 @@ Citizen.CreateThread(function()
               if (Config['Utils']["Contracts"]["DisableTrackingOnDCB"]) and (Class == "D" or Class == "C" or Class == "B") then
                 CallingCops = false
               else
-               --TriggerEvent("bropixel-boosting:SendNotify" , {plate = Contracts[startedcontractid].plate})
+               --TriggerEvent("boosting:SendNotify" , {plate = Contracts[startedcontractid].plate})
                 local primary, secondary = GetVehicleColours(veh)
                 primary = colorNames[tostring(primary)]
                 secondary = colorNames[tostring(secondary)]
                 local hash = GetEntityModel(Vehicle)
                 local modelName = GetLabelText(GetDisplayNameFromVehicleModel(hash))
                 if not NotifySent then
-                  TriggerServerEvent("bropixel-boosting:CallCopsNotify" , Contracts[startedcontractid].plate , modelName, primary..', '..secondary , getStreetandZone(GetEntityCoords(PlayerPed)))
+                  TriggerServerEvent("boosting:CallCopsNotify" , Contracts[startedcontractid].plate , modelName, primary..', '..secondary , getStreetandZone(GetEntityCoords(PlayerPed)))
                   CallingCops = true
                   NotifySent = true
                 end
@@ -715,7 +802,7 @@ Citizen.CreateThread(function()
                 local hash = GetEntityModel(Vehicle)
                 local modelName = GetLabelText(GetDisplayNameFromVehicleModel(hash))
                 if not NotifySent then
-                  TriggerServerEvent("bropixel-boosting:CallCopsNotify" , Contracts[startedcontractid].plate , modelName, primary..', '..secondary , getStreetandZone(GetEntityCoords(PlayerPed)))
+                  TriggerServerEvent("boosting:CallCopsNotify" , Contracts[startedcontractid].plate , modelName, primary..', '..secondary , getStreetandZone(GetEntityCoords(PlayerPed)))
                   CallingCops = true
                   NotifySent = true
                 end
@@ -730,20 +817,22 @@ end)
 
 
 
-Citizen.CreateThread(function()
-  while true do
-    Citizen.Wait(Config['Utils']["Contracts"]["TimeBetweenContracts"])
-    local shit = math.random(1,10)
-    local DVTen = Config['Utils']["Contracts"]["ContractChance"] / 10
-    if(shit <= DVTen) then
-      if Config['Utils']["VIN"]["ForceVin"] then
-        TriggerEvent('bropixel-boosting:CreateContract', true)
-      else
-        TriggerEvent("bropixel-boosting:CreateContract")
-      end
-    end
-  end
-end)
+-- Citizen.CreateThread(function()
+  -- while true do
+    -- Citizen.Wait(Config['Utils']["Contracts"]["TimeBetweenContracts"])
+    -- local shit = math.random(1,10)
+    -- local DVTen = Config['Utils']["Contracts"]["ContractChance"] / 10
+    -- if(shit <= DVTen) then
+      -- if Config['Utils']["VIN"]["ForceVin"] then
+        -- TriggerEvent('boosting:CreateContract', true)
+      -- else
+        -- TriggerEvent("boosting:CreateContract")
+      -- end
+    -- end
+  -- end
+-- end)
+
+
 
 
 Citizen.CreateThread(function()
@@ -763,7 +852,7 @@ Citizen.CreateThread(function()
             Citizen.Wait(300)
             DeleteBlip()
             if OnTheDropoffWay then
-              TriggerEvent('bropixel-boosting:ContractDone')
+              TriggerEvent('boosting:ContractDone')
             end
             OnTheDropoffWay = false
             DisablerTimes = 0
@@ -783,8 +872,8 @@ AddEventHandler('onResourceStart', function(resource)
   end
 end)
 
-RegisterNetEvent("bropixel-boosting:ContractDone")
-AddEventHandler("bropixel-boosting:ContractDone" , function()
+RegisterNetEvent("boosting:ContractDone")
+AddEventHandler("boosting:ContractDone" , function()
   if CompletedTask then
     if Config['General']["Core"] == "QBCORE" then
       CoreName.Functions.Notify(Config['Utils']["Notifications"]["DropOffMsg"], "success", 3500)    
@@ -793,9 +882,9 @@ AddEventHandler("bropixel-boosting:ContractDone" , function()
     elseif Config['General']["Core"] == "NPBASE" then
         TriggerEvent("DoLongHudText",Config['Utils']["Notifications"]["DropOffMsg"])
     end
-    TriggerServerEvent("bropixel-boosting:removeblip")
+    TriggerServerEvent("boosting:removeblip")
     Citizen.Wait(math.random(25000,35000))
-    TriggerServerEvent('bropixel-boosting:finished')
+    TriggerServerEvent('boosting:finished')
 	local niceprice = VehiclePrice * Config['General']["BNErewardmultiplier"]
     BNEBoosting['functions'].AddBne(niceprice)
     print(nice)
@@ -822,7 +911,7 @@ function HasItem(item)
     Citizen.Wait(500)
     return hasitem
   elseif Config['General']["Core"] == "ESX" then
-    ESX.TriggerServerCallback('bropixel-boosting:canPickUp', function(result)
+    ESX.TriggerServerCallback('boosting:canPickUp', function(result)
       hasitem = result
     end , item)
     Citizen.Wait(500)
@@ -845,7 +934,7 @@ Citizen.CreateThread(function()
       Citizen.Wait(Config['Utils']["Blips"]["BlipUpdateTime"])
       local coords = GetEntityCoords(PlayerPedId())
       if CallingCops then
-        TriggerServerEvent('bropixel-boosting:alertcops', coords.x, coords.y, coords.z)
+        TriggerServerEvent('boosting:alertcops', coords.x, coords.y, coords.z)
       end
     else
       Wait(500)
@@ -854,8 +943,8 @@ Citizen.CreateThread(function()
 end)
 
 
-RegisterNetEvent('bropixel-boosting:SendNotify')
-AddEventHandler('bropixel-boosting:SendNotify' , function(data)
+RegisterNetEvent('boosting:SendNotify')
+AddEventHandler('boosting:SendNotify' , function(data)
   if Config['General']["PoliceNeedLaptopToseeNotifications"] then
     if(HasItem('pixellaptop') == true) then
       SendNUIMessage({addNotify = 'true' , plate = data.plate , model = data.model , color = data.color , place = data.place , length = Config['Utils']['Laptop']['CopNotifyLength']})
@@ -865,13 +954,13 @@ AddEventHandler('bropixel-boosting:SendNotify' , function(data)
   end
 end)
 
-RegisterNetEvent('bropixel-boosting:removecopblip')
-AddEventHandler('bropixel-boosting:removecopblip', function()
+RegisterNetEvent('boosting:removecopblip')
+AddEventHandler('boosting:removecopblip', function()
   DeleteCopBlip()
 end)
 
-RegisterNetEvent('bropixel-boosting:setcopblip')
-AddEventHandler('bropixel-boosting:setcopblip', function(cx,cy,cz)
+RegisterNetEvent('boosting:setcopblip')
+AddEventHandler('boosting:setcopblip', function(cx,cy,cz)
   if Config['General']["PoliceNeedLaptopToseeNotifications"] then
     if(HasItem('pixellaptop') == true) then
       CreateCopBlip(cx,cy,cz)
@@ -881,16 +970,16 @@ AddEventHandler('bropixel-boosting:setcopblip', function(cx,cy,cz)
   end
 end)
 
-RegisterNetEvent('bropixel-boosting:setBlipTime')
-AddEventHandler('bropixel-boosting:setBlipTime', function()
+RegisterNetEvent('boosting:setBlipTime')
+AddEventHandler('boosting:setBlipTime', function()
   Config['Utils']["Blips"]["BlipUpdateTime"] = 7000
 end)
 
 
 
 
-RegisterNetEvent("bropixel-boosting:StartUI")
-AddEventHandler("bropixel-boosting:StartUI"  , function()
+RegisterNetEvent("boosting:StartUI")
+AddEventHandler("boosting:StartUI"  , function()
   NuiLoaded = true
 end)
 
@@ -931,9 +1020,9 @@ Citizen.CreateThread(function()
   if Config['Utils']["Commands"]["boosting_test"] ~= 'nil' then
     RegisterCommand(Config['Utils']["Commands"]["boosting_test"], function()
       if Config['Utils']["VIN"]["ForceVin"] then
-        TriggerEvent('bropixel-boosting:CreateContract', true)
+        TriggerEvent('boosting:CreateContract', true)
       else
-        TriggerEvent("bropixel-boosting:CreateContract")
+        TriggerEvent("boosting:CreateContract")
       end
     end)
   end
@@ -1002,15 +1091,16 @@ local function AddVehicleToGarage()
   local EntityModel = GetEntityModel(Vehicle)
   local DiplayName = GetDisplayNameFromVehicleModel(EntityModel)
   if Config['General']["Core"] == "QBCORE" then
-    CoreName.Functions.Notify("Vin scratch complete!", "success", 3500)    
-    TriggerServerEvent('bropixel-boosting:AddVehicle',string.lower(DiplayName) ,Contracts[startedcontractid].plate)
+    CoreName.Functions.Notify("Vin scratch complete!", "success", 3500)   
+    local vehicleProps = QBCore.Functions.GetVehicleProperties(Vehicle)	
+    TriggerServerEvent('boosting:AddVehicle',string.lower(DiplayName) ,Contracts[startedcontractid].plate, vehicleProps)
   elseif Config['General']["Core"] == "ESX" then
       ShowNotification("Vin scratch complete!",'success')
       local vehicleProps = ESX.Game.GetVehicleProperties(Vehicle)
-      TriggerServerEvent('bropixel-boosting:AddVehicle',string.lower(DiplayName) ,Contracts[startedcontractid].plate,vehicleProps)
+      TriggerServerEvent('boosting:AddVehicle',string.lower(DiplayName) ,Contracts[startedcontractid].plate,vehicleProps)
   elseif Config['General']["Core"] == "NPBASE" then
       TriggerEvent("DoLongHudText","Vin scratch complete!")
-      TriggerServerEvent('bropixel-boosting:AddVehicle',string.lower(DiplayName) ,Contracts[startedcontractid].plate)
+      TriggerServerEvent('boosting:AddVehicle',string.lower(DiplayName) ,Contracts[startedcontractid].plate)
   end
   vinstarted = false
   CanScratchVehicle = false
@@ -1018,8 +1108,8 @@ local function AddVehicleToGarage()
   
 end
 
-RegisterNetEvent("bropixel-boosting:client:UseComputer")
-AddEventHandler("bropixel-boosting:client:UseComputer" , function()
+RegisterNetEvent("boosting:client:UseComputer")
+AddEventHandler("boosting:client:UseComputer" , function()
   if Config['General']["Core"] == "QBCORE" then
     if CanUseComputer then
       CoreName.Functions.Progressbar("boosting_scratch", "Connection to network...", 5000, false, true, {
@@ -1032,7 +1122,7 @@ AddEventHandler("bropixel-boosting:client:UseComputer" , function()
           anim = ScratchAnim,
           flags = 16,
         }, {}, {}, function() -- Done
-          TriggerEvent('bropixel-boosting:client:2ndUseComputer')
+          TriggerEvent('boosting:client:2ndUseComputer')
         end, function() -- Cancel
           StopAnimTask(PlayerPedId(), ScratchAnimDict, "exit", 1.0)
           CoreName.Functions.Notify("Failed!", "error", 3500)
@@ -1063,7 +1153,7 @@ AddEventHandler("bropixel-boosting:client:UseComputer" , function()
       TaskPlayAnim(PlayerPedId(), ScratchAnimDict, ScratchAnim, 3.0, -8, -1, 63, 0, 0, 0, 0 )
       local finished = exports[Config['CoreSettings']["NPBASE"]["ProgressBarScriptName"]]:taskBar(5000, 'Connection to network...')
       if (finished == 100) then
-        TriggerEvent('bropixel-boosting:client:2ndUseComputer')
+        TriggerEvent('boosting:client:2ndUseComputer')
       end
     else
       TriggerEvent("DoLongHudText","Can't use this now!",2)
@@ -1071,8 +1161,8 @@ AddEventHandler("bropixel-boosting:client:UseComputer" , function()
   end
 end)
 
-RegisterNetEvent("bropixel-boosting:client:2ndUseComputer")
-AddEventHandler("bropixel-boosting:client:2ndUseComputer" , function()
+RegisterNetEvent("boosting:client:2ndUseComputer")
+AddEventHandler("boosting:client:2ndUseComputer" , function()
   if Config['General']["Core"] == "QBCORE" then
     CoreName.Functions.Progressbar("boosting_scratch", "Wiping online paperwork...", 5000, false, true, {
       disableMovement = true,
@@ -1106,8 +1196,8 @@ AddEventHandler("bropixel-boosting:client:2ndUseComputer" , function()
   end
 end)
 
-RegisterNetEvent("bropixel-boosting:client:ScratchVehicle")
-AddEventHandler("bropixel-boosting:client:ScratchVehicle" , function()
+RegisterNetEvent("boosting:client:ScratchVehicle")
+AddEventHandler("boosting:client:ScratchVehicle" , function()
   if Config['General']["Core"] == "QBCORE" then
     CoreName.Functions.Progressbar("boosting_scratch", "Scratching Vin", 10000, false, true, {
       disableMovement = true,
@@ -1176,7 +1266,7 @@ Citizen.CreateThread(function()
           end
         end
         if dist < 2.5 then
-          TriggerEvent('bropixel-boosting:client:ScratchVehicle')
+          TriggerEvent('boosting:client:ScratchVehicle')
           CanScratchVehicle = false
           break
         end
@@ -1207,7 +1297,7 @@ function MainThread()
             DrawText3D2(Config['Utils']["VIN"]["VinLocations"].x, Config['Utils']["VIN"]["VinLocations"].y, Config['Utils']["VIN"]["VinLocations"].z, "~g~E~w~ - Use Computer")
           end
           if IsControlJustReleased(0, Keys["E"]) then
-            TriggerEvent('bropixel-boosting:client:UseComputer')
+            TriggerEvent('boosting:client:UseComputer')
             return
           end
         end 
@@ -1240,16 +1330,7 @@ function getVehicleInDirection(coordFrom, coordTo)
 end
 
 
-
-
-
-RegisterNetEvent('XZCore:Client:OnPlayerLoaded')
-AddEventHandler('XZCore:Client:OnPlayerLoaded', function()
-  CoreName.Functions.TriggerCallback('bropixel-boosting:server:checkVin' , function(res)
-    if(res == true) then
-      TriggerEvent('bropixel-boosting:CreateContract'  , true)
-    else
-      return
-    end
-  end)
+RegisterNetEvent('boosting:client:synccontracts')
+AddEventHandler('boosting:client:synccontracts', function()
+   TriggerServerEvent('boosting:server:synccontracts', Contracts)
 end)

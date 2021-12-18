@@ -17,5 +17,7 @@ ui_page 'ui/index.html'
 
 files {
   'ui/*',
-  'ui/images/*'
+  'ui/images/*',
+  'ui/css/*',
+  'ui/webfonts/*'
 }

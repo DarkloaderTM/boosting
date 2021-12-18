@@ -32,21 +32,21 @@ BNEBoosting = {}
 BNEBoosting['functions'] = {
     GetCurrentBNE = function()
         if Config['General']["Core"] == "QBCORE" then
-            CoreName.Functions.TriggerCallback('bropixel-boosting:getCurrentBNE', function(amount)
+            CoreName.Functions.TriggerCallback('boosting:getCurrentBNE', function(amount)
                 value =  amount.BNE
                 background =  amount.background
             end)
             Wait(200)
             return ({bne = value ,back =  background})
         elseif Config['General']["Core"] == "ESX" then
-            ESX.TriggerServerCallback('bropixel-boosting:getCurrentBNE', function(amount)
+            ESX.TriggerServerCallback('boosting:getCurrentBNE', function(amount)
                 value =  amount.BNE
                 background =  amount.background
             end)
             Wait(200)
             return ({bne = value ,back =  background})
         elseif Config['General']["Core"] == "NPBASE" then
-            local amount = RPC.execute("bropixel-boosting:getCurrentBNE")
+            local amount = RPC.execute("boosting:getCurrentBNE")
             if amount ~= nil then
                 value =  amount.BNE
                 background =  amount.background
@@ -57,38 +57,38 @@ BNEBoosting['functions'] = {
     end,
     RemoveBNE = function(amount)
         if Config['General']["Core"] == "QBCORE" then
-            CoreName.Functions.TriggerCallback('bropixel-boosting:removeBNE', function(amount) 
+            CoreName.Functions.TriggerCallback('boosting:removeBNE', function(amount) 
                 end , amount)
                 Wait(200)
             return true
         elseif Config['General']["Core"] == "ESX" then
-            ESX.TriggerServerCallback('bropixel-boosting:removeBNE', function(amount)
+            ESX.TriggerServerCallback('boosting:removeBNE', function(amount)
                 end , amount)
                 Wait(200)
             return true
         elseif Config['General']["Core"] == "NPBASE" then
-            RPC.execute("bropixel-boosting:removeBNE",amount)
+            RPC.execute("boosting:removeBNE",amount)
                 Wait(200)
             return true
         end
     end,
     SetBackground = function(backgroundurl)
-        TriggerServerEvent("bropixel-boosting:server:setBacgkround" , backgroundurl)
+        TriggerServerEvent("boosting:server:setBacgkround" , backgroundurl)
     end,
 
     AddBne = function(amount)
         if Config['General']["Core"] == "QBCORE" then
-            CoreName.Functions.TriggerCallback('bropixel-boosting:addBne', function(amount)
+            CoreName.Functions.TriggerCallback('boosting:addBne', function(amount)
                 end , amount)
                 Wait(200)
             return true
         elseif Config['General']["Core"] == "ESX" then
-            ESX.TriggerServerCallback('bropixel-boosting:addBne', function(amount)
+            ESX.TriggerServerCallback('boosting:addBne', function(amount)
                 Wait(200)
                 return true
             end , amount)
         elseif Config['General']["Core"] == "NPBASE" then
-            RPC.execute("bropixel-boosting:addBne",amount)
+            RPC.execute("boosting:addBne",amount)
                 Wait(200)
             return true
         end

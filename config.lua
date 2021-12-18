@@ -44,7 +44,7 @@ Config['Utils'] = {
         ["RewardAccount"] = "cash", -- this can be only ywo values (no need to config if you are using an item as a reward)
     },
     ["Contracts"] = {
-        ["TimeBetweenContracts"] = 600000, -- Time in (ms) between contract creations
+        ["TimeBetweenContracts"] = 300000, -- Time in (ms) between contract creations
         ["ContractChance"] = 60, -- This is the luck percentage of getting a contract
     },
     ["VIN"] = {
@@ -155,7 +155,7 @@ Config.Vehicles = {
     [20] = {vehicle = "Virgo3"},
     [21] = {vehicle = "Tampa"},
     [22] = {vehicle = "Blade"},
-    [23] = {vehicle = "Nightshade"},
+    [23] = {vehicle = "Sultan"},
     [24] = {vehicle = "Primo"},
     [25] = {vehicle = "Primo2"},
     [26] = {vehicle = "Regina"},
@@ -453,6 +453,7 @@ end
 
 ShowNotification = function(msg, type)
     exports['mythic_notify']:SendAlert(type, msg)
+	--exports['co_notify']:SendNotify('boosting', type, msg)
 end
 
 

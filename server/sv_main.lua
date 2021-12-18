@@ -64,18 +64,18 @@ SQL = function(query, parameters, cb)
 end
 
 if Config['General']["Core"] == "QBCORE" then
-    CoreName.Functions.CreateCallback('bropixel-boosting:GetExpireTime', function(source, cb)
+    CoreName.Functions.CreateCallback('boosting:GetExpireTime', function(source, cb)
         local shit = (os.time() + 6 * 3600)
         cb(shit)
     end)
 elseif Config['General']["Core"] == "ESX" then
-    ESX.RegisterServerCallback('bropixel-boosting:GetExpireTime', function(source, cb)
+    ESX.RegisterServerCallback('boosting:GetExpireTime', function(source, cb)
 
         local shit = (os.time() + 6 * 3600)
         cb(shit)
     end)
 elseif Config['General']["Core"] == "NPBASE" then
-    RPC.register("bropixel-boosting:GetExpireTime", function()
+    RPC.register("boosting:GetExpireTime", function()
         local shit = (os.time() + 6 * 3600)
         return shit
     end)
@@ -83,7 +83,7 @@ end
 
 
 if Config['General']["Core"] == "QBCORE" then
-    CoreName.Functions.CreateCallback('bropixel-boosting:getCurrentBNE', function(source, cb)
+    CoreName.Functions.CreateCallback('boosting:getCurrentBNE', function(source, cb)
         local src = source
         local pData = CoreName.Functions.GetPlayer(src)
         local cid = pData.PlayerData.citizenid
@@ -102,7 +102,7 @@ if Config['General']["Core"] == "QBCORE" then
         end
     end)
 elseif Config['General']["Core"] == "ESX" then
-    ESX.RegisterServerCallback('bropixel-boosting:getCurrentBNE', function(source, cb)
+    ESX.RegisterServerCallback('boosting:getCurrentBNE', function(source, cb)
 
         local src = source
         local xPlayer = ESX.GetPlayerFromId(src)
@@ -123,7 +123,7 @@ elseif Config['General']["Core"] == "ESX" then
         end
     end)
 elseif Config['General']["Core"] == "NPBASE" then
-    RPC.register("bropixel-boosting:getCurrentBNE", function()
+    RPC.register("boosting:getCurrentBNE", function()
         local src = source
         local user = exports[Config['CoreSettings']["NPBASE"]["Name"]]:getModule("Player"):GetUser(src)
         local cid = user:getCurrentCharacter().id
@@ -149,8 +149,8 @@ end
 
 
 
-RegisterNetEvent("bropixel-boosting:server:setBacgkround")
-AddEventHandler("bropixel-boosting:server:setBacgkround" , function(back)
+RegisterNetEvent("boosting:server:setBacgkround")
+AddEventHandler("boosting:server:setBacgkround" , function(back)
     local src = source
     if Config['General']["Core"] == "QBCORE" then
         local pData = CoreName.Functions.GetPlayer(src)
@@ -177,7 +177,7 @@ end)
 
 
 if Config['General']["Core"] == "QBCORE" then
-    CoreName.Functions.CreateCallback('bropixel-boosting:removeBNE', function(source, cb , amount)
+    CoreName.Functions.CreateCallback('boosting:removeBNE', function(source, cb , amount)
         local src = source
         local pData = CoreName.Functions.GetPlayer(src)
         local cid = pData.PlayerData.citizenid
@@ -192,7 +192,7 @@ if Config['General']["Core"] == "QBCORE" then
         end
     end)
 elseif Config['General']["Core"] == "ESX" then
-    ESX.RegisterServerCallback('bropixel-boosting:removeBNE', function(source, cb , amount)
+    ESX.RegisterServerCallback('boosting:removeBNE', function(source, cb , amount)
 
         local src = source
         local xPlayer = ESX.GetPlayerFromId(src)
@@ -210,7 +210,7 @@ elseif Config['General']["Core"] == "ESX" then
         end
     end)
 elseif Config['General']["Core"] == "NPBASE" then
-    RPC.register("bropixel-boosting:removeBNE", function(amount)
+    RPC.register("boosting:removeBNE", function(amount)
         local src = source
         local user = exports[Config['CoreSettings']["NPBASE"]["Name"]]:getModule("Player"):GetUser(src)
         local cid = user:getCurrentCharacter().id
@@ -230,7 +230,7 @@ end
 
 
 if Config['General']["Core"] == "QBCORE" then
-    CoreName.Functions.CreateCallback('bropixel-boosting:addBne', function(source, cb , amount)
+    CoreName.Functions.CreateCallback('boosting:addBne', function(source, cb , amount)
         local src = source
         local pData = CoreName.Functions.GetPlayer(src)
         local cid = pData.PlayerData.citizenid
@@ -245,7 +245,7 @@ if Config['General']["Core"] == "QBCORE" then
         end
     end)
 elseif Config['General']["Core"] == "ESX" then
-    ESX.RegisterServerCallback('bropixel-boosting:addBne', function(source, cb , amount)
+    ESX.RegisterServerCallback('boosting:addBne', function(source, cb , amount)
         local src = source
         local xPlayer = ESX.GetPlayerFromId(src)
         local cid = xPlayer.identifier
@@ -258,7 +258,7 @@ elseif Config['General']["Core"] == "ESX" then
         end
     end)
 elseif Config['General']["Core"] == "NPBASE" then
-    RPC.register("bropixel-boosting:addBne", function(amount)
+    RPC.register("boosting:addBne", function(amount)
         local src = source
         local user = exports[Config['CoreSettings']["NPBASE"]["Name"]]:getModule("Player"):GetUser(src)
         local cid = user:getCurrentCharacter().id
@@ -277,7 +277,7 @@ end
 
 
 if Config['General']["Core"] == "QBCORE" then
-    CoreName.Functions.CreateCallback('bropixel-boosting:server:checkVin', function(source, cb , data)
+    CoreName.Functions.CreateCallback('boosting:server:checkVin', function(source, cb , data)
         local src = source
         local pData = CoreName.Functions.GetPlayer(src)
         local cid = pData.PlayerData.citizenid
@@ -301,7 +301,7 @@ if Config['General']["Core"] == "QBCORE" then
         end
     end)
 elseif Config['General']["Core"] == "ESX" then
-    ESX.RegisterServerCallback('bropixel-boosting:server:checkVin', function(source, cb , data)
+    ESX.RegisterServerCallback('boosting:server:checkVin', function(source, cb , data)
 
         local src = source
         local xPlayer = ESX.GetPlayerFromId(src)
@@ -326,7 +326,7 @@ elseif Config['General']["Core"] == "ESX" then
         end
     end)
 elseif Config['General']["Core"] == "NPBASE" then
-    RPC.register("bropixel-boosting:server:checkVin", function()
+    RPC.register("boosting:server:checkVin", function()
         local src = source
         local user = exports[Config['CoreSettings']["NPBASE"]["Name"]]:getModule("Player"):GetUser(src)
         local cid = user:getCurrentCharacter().id
@@ -353,37 +353,137 @@ end
 
 
 if Config['General']["Core"] == "QBCORE" then
-    CoreName.Functions.CreateCallback('bropixel-boosting:GetTimeLeft', function(source, cb , data)
+    CoreName.Functions.CreateCallback('boosting:GetTimeLeft', function(source, cb , data)
         local shit = 2
         cb(shit)
     end)
 elseif Config['General']["Core"] == "ESX" then
-    ESX.RegisterServerCallback('bropixel-boosting:GetTimeLeft', function(source, cb , data)
+    ESX.RegisterServerCallback('boosting:GetTimeLeft', function(source, cb , data)
         local shit = 2
         cb(shit)
     end)
 elseif Config['General']["Core"] == "NPBASE" then
-    RPC.register("bropixel-boosting:GetTimeLeft", function()
+    RPC.register("boosting:GetTimeLeft", function()
         local shit = 2
         cb(shit)
     end)
 end
 
 
+RegisterServerEvent("boosting:joinQueue")
+AddEventHandler("boosting:joinQueue", function()
+  pSrc = source
+  if Config['General']["Core"] == "QBCORE" then
+  local Player = CoreName.Functions.GetPlayer(pSrc)
+  local cid = Player.PlayerData.citizenid
+  
+    local result = SQL('SELECT * FROM boost_queue WHERE identifier = ?', {cid})
+    if result[1] == nil then
+      SQL("INSERT INTO boost_queue (identifier, pSrc) VALUES (@cid, @pSrc)", {['@cid'] = cid, ['@pSrc'] = pSrc })
+	  print("added" .. " " .. "CID: " .. cid .. " " .."ID:".. pSrc .. " " .. "to boosting queue") 
+    else
+      print(cid.." already in queue")
+    end
+   
+  elseif Config['General']["Core"] == "ESX" then
+  local xPlayer = ESX.GetPlayerFromId(pSrc)
+  local cid = xPlayer.getIdentifier()
+  
+    local result = SQL('SELECT * FROM boost_queue WHERE identifier = ?', {cid})
+    if result[1] == nil then
+      SQL("INSERT INTO boost_queue (identifier, pSrc) VALUES (@cid, @pSrc)", {['@cid'] = cid, ['@pSrc'] = pSrc })
+	  print("added" .. " " .. "CID: " .. cid .. " " .."ID:".. pSrc .. " " .. "to boosting queue") 
+    else
+      print(cid.." already in queue")
+    end
+  elseif Config['General']["Core"] == "NPBASE" then
+  local user = exports[Config['CoreSettings']["NPBASE"]["Name"]]:getModule("Player"):GetUser(pSrc)
+  local cid = user:getCurrentCharacter().id
+    local result = SQL('SELECT * FROM boost_queue WHERE identifier = ?', {cid})
+    if result[1] == nil then
+      SQL("INSERT INTO boost_queue (identifier, pSrc) VALUES (@cid, @pSrc)", {['@cid'] = cid, ['@pSrc'] = pSrc })
+	  print("added" .. " " .. "CID: " .. cid .. " " .."ID:".. pSrc .. " " .. "to boosting queue") 
+    else
+      print(cid.." already in queue")
+    end
+  end
+end)
+
+RegisterServerEvent('boosting:leaveQueue')
+AddEventHandler('boosting:leaveQueue', function()
+  pSrc = source
+  if Config['General']["Core"] == "QBCORE" then
+  local Player = CoreName.Functions.GetPlayer(pSrc)
+  local cid = Player.PlayerData.citizenid
+  
+    local result = SQL('SELECT * FROM boost_queue WHERE identifier = ?', {cid})
+    if result[1] ~= nil then
+      SQL("DELETE FROM boost_queue WHERE `identifier` = @cid", {['@cid'] = cid})
+      print("removed" .. " " .. "CID: " .. cid .. " " .."ID:".. pSrc .. " " .. "from boosting queue") 
+    end
+  
+  elseif Config['General']["Core"] == "ESX" then
+  local xPlayer = ESX.GetPlayerFromId(pSrc)
+  local cid = xPlayer.getIdentifier()
+  
+    local result = SQL('SELECT * FROM boost_queue WHERE identifier = ?', {cid})
+    if result[1] ~= nil then
+      SQL("DELETE FROM boost_queue WHERE `identifier` = @cid", {['@cid'] = cid})
+      print("removed" .. " " .. "CID: " .. cid .. " " .."ID:".. pSrc .. " " .. "from boosting queue") 
+    end
+  
+  elseif Config['General']["Core"] == "NPBASE" then
+  local user = exports[Config['CoreSettings']["NPBASE"]["Name"]]:getModule("Player"):GetUser(pSrc)
+  local cid = user:getCurrentCharacter().id
+  
+    local result = SQL('SELECT * FROM boost_queue WHERE identifier = ?', {cid})
+    if result[1] ~= nil then
+      SQL("DELETE FROM boost_queue WHERE `identifier` = @cid", {['@cid'] = cid})
+      print("removed" .. " " .. "CID: " .. cid .. " " .."ID:".. pSrc .. " " .. "from boosting queue") 
+    end  
+  end
+end)
+
+Citizen.CreateThread(function()
+  while true do
+    Citizen.Wait(Config['Utils']["Contracts"]["TimeBetweenContracts"])
+    local result = SQL('SELECT * FROM boost_queue',{})
+      if #result ~= 0 then
+        local random = math.random(1, #result)
+        if result[random] ~= nil then
+          local pSrc = result[random].pSrc
+          local cid = result[random].identifier
+		  local shit = math.random(1,10)
+          local DVTen = Config['Utils']["Contracts"]["ContractChance"] / 10
+          if(shit <= DVTen) then
+          TriggerClientEvent('boosting:CreateContract', pSrc, true)
+		  else
+		  TriggerClientEvent('boosting:CreateContract', pSrc)
+		  end
+        end
+      end
+  end
+end)
+
+RegisterServerEvent('boosting:transfercontract')
+AddEventHandler('boosting:transfercontract', function(contract, target)
+    TriggerClientEvent('boosting:ReceiveContract', target, contract)
+end)
+    
   
 
 ---------------- Cop Blip Thingy ------------------
 
 
 
-RegisterServerEvent('bropixel-boosting:alertcops')
-AddEventHandler('bropixel-boosting:alertcops', function(cx,cy,cz)
+RegisterServerEvent('boosting:alertcops')
+AddEventHandler('boosting:alertcops', function(cx,cy,cz)
     if Config['General']["Core"] == "QBCORE" then
         for k, v in pairs(CoreName.Functions.GetPlayers()) do
             local Player = CoreName.Functions.GetPlayer(v)
             if Player ~= nil then
                 if Player.PlayerData.job.name == Config['General']["PoliceJobName"] then
-                    TriggerClientEvent('bropixel-boosting:setcopblip', Player.PlayerData.source, cx,cy,cz)
+                    TriggerClientEvent('boosting:setcopblip', Player.PlayerData.source, cx,cy,cz)
                 end
             end
         end
@@ -394,7 +494,7 @@ AddEventHandler('bropixel-boosting:alertcops', function(cx,cy,cz)
             local xPlayer = ESX.GetPlayerFromId(xPlayers[i])
         
             if xPlayer.job.name == Config['General']["PoliceJobName"] then
-                TriggerClientEvent('bropixel-boosting:setcopblip', xPlayers[i], cx,cy,cz)
+                TriggerClientEvent('boosting:setcopblip', xPlayers[i], cx,cy,cz)
             end
         end
     elseif Config['General']["Core"] == "NPBASE" then
@@ -404,7 +504,7 @@ AddEventHandler('bropixel-boosting:alertcops', function(cx,cy,cz)
             local job = user:getVar("job")
     
             if job == Config['General']["PoliceJobName"] then
-                TriggerClientEvent('bropixel-boosting:setcopblip', src, cx,cy,cz)
+                TriggerClientEvent('boosting:setcopblip', src, cx,cy,cz)
             end
         end
     end
@@ -414,8 +514,8 @@ end)
 
 
 
-RegisterServerEvent('bropixel-boosting:AddVehicle')
-AddEventHandler('bropixel-boosting:AddVehicle', function(model, plate, vehicleProps)
+RegisterServerEvent('boosting:AddVehicle')
+AddEventHandler('boosting:AddVehicle', function(model, plate, vehicleProps)
     if Config['General']["Core"] == "QBCORE" then
         local src = source
         local pData = CoreName.Functions.GetPlayer(src)
@@ -455,14 +555,14 @@ end)
 
 
 
-RegisterServerEvent('bropixel-boosting:removeblip')
-AddEventHandler('bropixel-boosting:removeblip', function()
+RegisterServerEvent('boosting:removeblip')
+AddEventHandler('boosting:removeblip', function()
     if Config['General']["Core"] == "QBCORE" then
         for k, v in pairs(CoreName.Functions.GetPlayers()) do
             local Player = CoreName.Functions.GetPlayer(v)
             if Player ~= nil then
                 if Player.PlayerData.job.name == Config['General']["PoliceJobName"] then
-                    TriggerClientEvent('bropixel-boosting:removecopblip', Player.PlayerData.source)
+                    TriggerClientEvent('boosting:removecopblip', Player.PlayerData.source)
                 end
             end
         end
@@ -472,7 +572,7 @@ AddEventHandler('bropixel-boosting:removeblip', function()
             local xPlayer = ESX.GetPlayerFromId(xPlayers[i])
         
             if xPlayer.job.name == Config['General']["PoliceJobName"] then
-                TriggerClientEvent('bropixel-boosting:removecopblip', xPlayers[i])
+                TriggerClientEvent('boosting:removecopblip', xPlayers[i])
             end
         end    
     elseif Config['General']["Core"] == "NPBASE" then
@@ -482,20 +582,20 @@ AddEventHandler('bropixel-boosting:removeblip', function()
             local job = user:getVar("job")
 
             if job == Config['General']["PoliceJobName"] then
-                TriggerClientEvent('bropixel-boosting:removecopblip', src)
+                TriggerClientEvent('boosting:removecopblip', src)
             end
         end
     end
 end)
 
-RegisterServerEvent('bropixel-boosting:SetBlipTime')
-AddEventHandler('bropixel-boosting:SetBlipTime', function()
+RegisterServerEvent('boosting:SetBlipTime')
+AddEventHandler('boosting:SetBlipTime', function()
     if Config['General']["Core"] == "QBCORE" then
         for k, v in pairs(CoreName.Functions.GetPlayers()) do
             local Player = CoreName.Functions.GetPlayer(v)
             if Player ~= nil then
                 if Player.PlayerData.job.name == Config['General']["PoliceJobName"] then
-                    TriggerClientEvent('bropixel-boosting:setBlipTime', Player.PlayerData.source)
+                    TriggerClientEvent('boosting:setBlipTime', Player.PlayerData.source)
                 end
             end
         end
@@ -505,7 +605,7 @@ AddEventHandler('bropixel-boosting:SetBlipTime', function()
             local xPlayer = ESX.GetPlayerFromId(xPlayers[i])
         
             if xPlayer.job.name == Config['General']["PoliceJobName"] then
-                TriggerClientEvent('bropixel-boosting:setBlipTime', xPlayers[i])
+                TriggerClientEvent('boosting:setBlipTime', xPlayers[i])
             end
         end
     elseif Config['General']["Core"] == "NPBASE" then
@@ -515,7 +615,7 @@ AddEventHandler('bropixel-boosting:SetBlipTime', function()
             local job = user:getVar("job")
     
             if job == Config['General']["PoliceJobName"] then
-                TriggerClientEvent('bropixel-boosting:setBlipTime', src)
+                TriggerClientEvent('boosting:setBlipTime', src)
             end
         end  
     end
@@ -524,8 +624,8 @@ end)
   
 
 
-RegisterNetEvent('bropixel-boosting:finished')
-AddEventHandler('bropixel-boosting:finished' , function()
+RegisterNetEvent('boosting:finished')
+AddEventHandler('boosting:finished' , function()
     if Config['General']["Core"] == "QBCORE" then
         local src = source
         local ply = CoreName.Functions.GetPlayer(src)                   
@@ -575,25 +675,25 @@ if Config['General']["Core"] == "QBCORE" then
         local Player = CoreName.Functions.GetPlayer(source)
     
         if Player.Functions.GetItemByName(item.name) then
-            TriggerClientEvent("bropixel-boosting:DisplayUI", source)
+            TriggerClientEvent("boosting:DisplayUI", source)
         end
     end)
 elseif Config['General']["Core"] == "ESX" then
     ESX.RegisterUsableItem('pixellaptop', function(source)
         local xPlayer = ESX.GetPlayerFromId(source)
-        TriggerClientEvent("bropixel-boosting:DisplayUI", source)
+        TriggerClientEvent("boosting:DisplayUI", source)
     end)
 end
 
 
-RegisterNetEvent('bropixel-boosting:usedlaptop')
-AddEventHandler('bropixel-boosting:usedlaptop' , function()
-    TriggerClientEvent("bropixel-boosting:DisplayUI", source)
+RegisterNetEvent('boosting:usedlaptop')
+AddEventHandler('boosting:usedlaptop' , function()
+    TriggerClientEvent("boosting:DisplayUI", source)
 end)
 
-RegisterNetEvent('bropixel-boosting:useddisabler')
-AddEventHandler('bropixel-boosting:useddisabler' , function()
-    TriggerClientEvent("bropixel-boosting:DisablerUsed", source)
+RegisterNetEvent('boosting:useddisabler')
+AddEventHandler('boosting:useddisabler' , function()
+    TriggerClientEvent("boosting:DisablerUsed", source)
 end)
 
 
@@ -601,13 +701,13 @@ if Config['General']["Core"] == "QBCORE" then
     CoreName.Functions.CreateUseableItem("disabler", function(source, item)
         local Player = CoreName.Functions.GetPlayer(source)
         if Player.Functions.GetItemByName(item.name) then
-            TriggerClientEvent("bropixel-boosting:DisablerUsed", source)
+            TriggerClientEvent("boosting:DisablerUsed", source)
         end
     end)
 elseif Config['General']["Core"] == "ESX" then
     ESX.RegisterUsableItem('disabler', function(source)
         local xPlayer = ESX.GetPlayerFromId(source)
-        TriggerClientEvent("bropixel-boosting:DisablerUsed", source)
+        TriggerClientEvent("boosting:DisablerUsed", source)
     end)
 end
 
@@ -615,7 +715,7 @@ end
 
 
 if Config['General']["Core"] == "QBCORE" then
-    CoreName.Functions.CreateCallback('bropixel-boosting:server:GetActivity', function(source, cb)
+    CoreName.Functions.CreateCallback('boosting:server:GetActivity', function(source, cb)
         local PoliceCount = 0
         for k, v in pairs(CoreName.Functions.GetPlayers()) do
             local Player = CoreName.Functions.GetPlayer(v)
@@ -628,7 +728,7 @@ if Config['General']["Core"] == "QBCORE" then
         cb(PoliceCount)
     end)
 elseif Config['General']["Core"] == "ESX" then
-    ESX.RegisterServerCallback('bropixel-boosting:server:GetActivity', function(source, cb)
+    ESX.RegisterServerCallback('boosting:server:GetActivity', function(source, cb)
         local PoliceCount = 0
         local xPlayers = ESX.GetPlayers()
         for i=1, #xPlayers, 1 do
@@ -644,7 +744,7 @@ end
 
 
 if Config['General']["Core"] == "ESX" then
-    ESX.RegisterServerCallback('bropixel-boosting:canPickUp', function(source, cb, item)
+    ESX.RegisterServerCallback('boosting:canPickUp', function(source, cb, item)
         local xPlayer = ESX.GetPlayerFromId(source)
         local xItem = xPlayer.getInventoryItem(item)
     
@@ -656,10 +756,29 @@ if Config['General']["Core"] == "ESX" then
     end)
 end
 
+RegisterNetEvent('boosting:server:synccontracts')
+AddEventHandler('boosting:server:synccontracts' , function(OtherUserContracts)
+	syncedcontracts = OtherUserContracts
+end)
+
+if Config['General']["Core"] == "QBCORE" then
+    CoreName.Functions.CreateCallback('boosting:getusercontracts', function(source, cb, target)
+	    TriggerClientEvent('boosting:client:synccontracts', target)
+		Citizen.Wait(1000)
+        cb(syncedcontracts)
+    end)
+elseif Config['General']["Core"] == "ESX" then
+    ESX.RegisterServerCallback('boosting:getusercontracts', function(source, cb, target)
+        TriggerClientEvent('boosting:client:synccontracts', target)
+		Citizen.Wait(1000)
+        cb(syncedcontracts)
+    end)
+end
+
 local color_msg = 195000
 
-RegisterNetEvent('bropixel-boosting:logs')
-AddEventHandler('bropixel-boosting:logs' , function(class, vehiclename)
+RegisterNetEvent('boosting:logs')
+AddEventHandler('boosting:logs' , function(class, vehiclename)
 	sendToDiscordBoostingLogs(class, discord_msg, color_msg,identifier)
 end)
 
@@ -685,14 +804,14 @@ end
 
 local authorized = true
 
-RegisterNetEvent('bropixel-boosting:loadNUI')
-AddEventHandler('bropixel-boosting:loadNUI' , function()
+RegisterNetEvent('boosting:loadNUI')
+AddEventHandler('boosting:loadNUI' , function()
     local source = source
-    TriggerClientEvent('bropixel-boosting:StartUI', source)
+    TriggerClientEvent('boosting:StartUI', source)
 end)
 
 
-RegisterServerEvent("bropixel-boosting:CallCopsNotify" , function(plate , model , color , streetLabel)
+RegisterServerEvent("boosting:CallCopsNotify" , function(plate , model , color , streetLabel)
     if Config['General']["Core"] == "QBCORE" then
         for k, v in pairs(CoreName.Functions.GetPlayers()) do
             local src = source
@@ -728,7 +847,7 @@ RegisterServerEvent("bropixel-boosting:CallCopsNotify" , function(plate , model 
             local xPlayer = ESX.GetPlayerFromId(xPlayers[i])
         
             if xPlayer.job.name == Config['General']["PoliceJobName"] then
-                TriggerClientEvent("bropixel-boosting:SendNotify" ,xPlayers[i] , {plate = plate , model = model , color = color , place = place})
+                TriggerClientEvent("boosting:SendNotify" ,xPlayers[i] , {plate = plate , model = model , color = color , place = place})
             end
         end
     elseif Config['General']["Core"] == "NPBASE" then
@@ -738,7 +857,7 @@ RegisterServerEvent("bropixel-boosting:CallCopsNotify" , function(plate , model 
             local job = user:getVar("job")
     
             if job == Config['General']["PoliceJobName"] then
-                TriggerClientEvent("bropixel-boosting:SendNotify" ,src , {plate = plate , model = model , color = color , place = place})
+                TriggerClientEvent("boosting:SendNotify" ,src , {plate = plate , model = model , color = color , place = place})
             end
         end
     end
