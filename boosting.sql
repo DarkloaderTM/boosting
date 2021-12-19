@@ -1,4 +1,4 @@
-CREATE TABLE IF NOT EXISTS `bropixel_boosting` (
+CREATE TABLE IF NOT EXISTS `boost_boosts` (
   `#` int(11) NOT NULL AUTO_INCREMENT,
   `citizenid` varchar(255) NOT NULL,
   `BNE` text NOT NULL DEFAULT '0',
