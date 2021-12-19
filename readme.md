@@ -6,7 +6,7 @@ https://github.com/DarkloaderTM/hackingminigame
 
 ## Read Config thoroughly
 
-## INSTALL BOTH SQL FILES
+## INSTALL SQL FILE
 
 ### if using esx or np-base following items to your inventory: 
 ```

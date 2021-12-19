@@ -120,11 +120,11 @@ AddVehicle = function(data)
 end
 
 AddBNE = function(cid, pBne, amount)
-    SQL('UPDATE bropixel_boosting SET BNE=@bne WHERE citizenid=@citizenid', {['@citizenid'] = cid , ['@bne'] = pBne + amount})
+    SQL('UPDATE boost_boosts SET BNE=@bne WHERE citizenid=@citizenid', {['@citizenid'] = cid , ['@bne'] = pBne + amount})
 end
 
 RemoveBNE = function(cid, pBne, amount)
-    SQL('UPDATE bropixel_boosting SET BNE=@bne WHERE citizenid=@citizenid', {['@citizenid'] = cid , ['@bne'] = pBne - amount})
+    SQL('UPDATE boost_boosts SET BNE=@bne WHERE citizenid=@citizenid', {['@citizenid'] = cid , ['@bne'] = pBne - amount})
 end
 
 -----     VEHCILES TO SPAWN        -------

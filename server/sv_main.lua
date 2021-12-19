@@ -88,9 +88,9 @@ if Config['General']["Core"] == "QBCORE" then
         local pData = CoreName.Functions.GetPlayer(src)
         local cid = pData.PlayerData.citizenid
         if pData ~= nil then
-            local sql = SQL('SELECT * FROM bropixel_boosting WHERE citizenid=@citizenid', {['@citizenid'] = cid})
+            local sql = SQL('SELECT * FROM boost_boosts WHERE citizenid=@citizenid', {['@citizenid'] = cid})
             if sql[1] == nil then
-                SQL('INSERT INTO bropixel_boosting (citizenid) VALUES (?)',{cid})
+                SQL('INSERT INTO boost_boosts (citizenid) VALUES (?)',{cid})
                 cb({BNE = 0, background = tostring(Config['Utils']["Laptop"]["DefaultBackground"]) , vin = nil})
             else
                 if sql[1].BNE ~= nil then
@@ -109,9 +109,9 @@ elseif Config['General']["Core"] == "ESX" then
         local cid = xPlayer.identifier
     
         if xPlayer ~= nil then
-            local sql = SQL('SELECT * FROM bropixel_boosting WHERE citizenid=@citizenid', {['@citizenid'] = cid})
+            local sql = SQL('SELECT * FROM boost_boosts WHERE citizenid=@citizenid', {['@citizenid'] = cid})
             if sql[1] == nil then
-                SQL('INSERT INTO bropixel_boosting (citizenid) VALUES (?)',{cid})
+                SQL('INSERT INTO boost_boosts (citizenid) VALUES (?)',{cid})
                 cb(0)
             else
                 if sql[1].BNE ~= nil then
@@ -128,9 +128,9 @@ elseif Config['General']["Core"] == "NPBASE" then
         local user = exports[Config['CoreSettings']["NPBASE"]["Name"]]:getModule("Player"):GetUser(src)
         local cid = user:getCurrentCharacter().id
         if user ~= nil then
-            local sql = SQL('SELECT * FROM bropixel_boosting WHERE citizenid=@citizenid', {['@citizenid'] = cid})
+            local sql = SQL('SELECT * FROM boost_boosts WHERE citizenid=@citizenid', {['@citizenid'] = cid})
             if sql[1] == nil then
-                SQL('INSERT INTO bropixel_boosting (citizenid) VALUES (?)',{cid})
+                SQL('INSERT INTO boost_boosts (citizenid) VALUES (?)',{cid})
                 value = 0
             else
                 if sql[1].BNE ~= nil then
@@ -155,20 +155,20 @@ AddEventHandler("boosting:server:setBacgkround" , function(back)
     if Config['General']["Core"] == "QBCORE" then
         local pData = CoreName.Functions.GetPlayer(src)
         local cid = pData.PlayerData.citizenid
-        local sql = SQL('UPDATE bropixel_boosting SET background=@b WHERE citizenid=@citizenid', {['@citizenid'] = cid , ['@b'] = back})
+        local sql = SQL('UPDATE boost_boosts SET background=@b WHERE citizenid=@citizenid', {['@citizenid'] = cid , ['@b'] = back})
         
     elseif Config['General']["Core"] == "ESX" then
         local xPlayer = ESX.GetPlayerFromId(src)
         local cid = xPlayer.identifier
 
         if xPlayer ~= nil then
-            local sql = SQL('UPDATE bropixel_boosting SET background=@b WHERE citizenid=@citizenid', {['@citizenid'] = cid , ['@b'] = back})
+            local sql = SQL('UPDATE boost_boosts SET background=@b WHERE citizenid=@citizenid', {['@citizenid'] = cid , ['@b'] = back})
         end
     elseif Config['General']["Core"] == "NPBASE" then
         local user = exports[Config['CoreSettings']["NPBASE"]["Name"]]:getModule("Player"):GetUser(src)
         local cid = user:getCurrentCharacter().id
         if user ~= nil then
-            local sql = SQL('UPDATE bropixel_boosting SET background=@b WHERE citizenid=@citizenid', {['@citizenid'] = cid , ['@b'] = back})
+            local sql = SQL('UPDATE boost_boosts SET background=@b WHERE citizenid=@citizenid', {['@citizenid'] = cid , ['@b'] = back})
         end 
     end
 end)
@@ -182,7 +182,7 @@ if Config['General']["Core"] == "QBCORE" then
         local pData = CoreName.Functions.GetPlayer(src)
         local cid = pData.PlayerData.citizenid
         if pData ~= nil then
-            local sql = SQL('SELECT * FROM bropixel_boosting WHERE citizenid=@citizenid', {['@citizenid'] = cid})
+            local sql = SQL('SELECT * FROM boost_boosts WHERE citizenid=@citizenid', {['@citizenid'] = cid})
             if sql[1].BNE ~= nil then
                 local pBNE = sql[1].BNE
                 RemoveBNE(cid, pBNE, amount)
@@ -199,7 +199,7 @@ elseif Config['General']["Core"] == "ESX" then
         local cid = xPlayer.identifier
     
         if xPlayer ~= nil then
-            local sql = SQL('SELECT * FROM bropixel_boosting WHERE citizenid=@citizenid', {['@citizenid'] = cid})
+            local sql = SQL('SELECT * FROM boost_boosts WHERE citizenid=@citizenid', {['@citizenid'] = cid})
             if sql[1].BNE ~= nil then
                 local pBNE = sql[1].BNE
                 RemoveBNE(cid, pBNE, amount)
@@ -215,7 +215,7 @@ elseif Config['General']["Core"] == "NPBASE" then
         local user = exports[Config['CoreSettings']["NPBASE"]["Name"]]:getModule("Player"):GetUser(src)
         local cid = user:getCurrentCharacter().id
         if user ~= nil then
-            local sql = SQL('SELECT * FROM bropixel_boosting WHERE citizenid=@citizenid', {['@citizenid'] = cid})
+            local sql = SQL('SELECT * FROM boost_boosts WHERE citizenid=@citizenid', {['@citizenid'] = cid})
             if sql[1].BNE ~= nil then
                 local pBNE = sql[1].BNE
                 RemoveBNE(cid, pBNE, amount)
@@ -235,7 +235,7 @@ if Config['General']["Core"] == "QBCORE" then
         local pData = CoreName.Functions.GetPlayer(src)
         local cid = pData.PlayerData.citizenid
         if pData ~= nil then
-            local sql = SQL('SELECT * FROM bropixel_boosting WHERE citizenid=@citizenid', {['@citizenid'] = cid})
+            local sql = SQL('SELECT * FROM boost_boosts WHERE citizenid=@citizenid', {['@citizenid'] = cid})
             if sql[1].BNE ~= nil then
                 local pBNE = sql[1].BNE
                 AddBNE(cid, pBNE, amount)
@@ -249,7 +249,7 @@ elseif Config['General']["Core"] == "ESX" then
         local src = source
         local xPlayer = ESX.GetPlayerFromId(src)
         local cid = xPlayer.identifier
-        local sql = SQL('SELECT * FROM bropixel_boosting WHERE citizenid=@citizenid', {['@citizenid'] = cid})
+        local sql = SQL('SELECT * FROM boost_boosts WHERE citizenid=@citizenid', {['@citizenid'] = cid})
         if sql[1].BNE ~= nil then
             local pBNE = sql[1].BNE
             AddBNE(cid, pBNE, amount)
@@ -263,7 +263,7 @@ elseif Config['General']["Core"] == "NPBASE" then
         local user = exports[Config['CoreSettings']["NPBASE"]["Name"]]:getModule("Player"):GetUser(src)
         local cid = user:getCurrentCharacter().id
         if user ~= nil then
-            local sql = SQL('SELECT * FROM bropixel_boosting WHERE citizenid=@citizenid', {['@citizenid'] = cid})
+            local sql = SQL('SELECT * FROM boost_boosts WHERE citizenid=@citizenid', {['@citizenid'] = cid})
             if sql[1].BNE ~= nil then
                 local pBNE = sql[1].BNE
                 AddBNE(cid, pBNE, amount)
@@ -283,18 +283,18 @@ if Config['General']["Core"] == "QBCORE" then
         local cid = pData.PlayerData.citizenid
     
         if pData ~= nil then
-            local sql = SQL('SELECT * FROM bropixel_boosting WHERE citizenid=@citizenid', {['@citizenid'] = cid})
+            local sql = SQL('SELECT * FROM boost_boosts WHERE citizenid=@citizenid', {['@citizenid'] = cid})
             if(sql[1] ~= nil) then
                 if(sql[1].vin == 0) then
                     value = true
-                    SQL('UPDATE bropixel_boosting SET vin=@vin WHERE citizenid=@citizenid', {['@citizenid'] = cid , ['@vin'] = os.time()})
+                    SQL('UPDATE boost_boosts SET vin=@vin WHERE citizenid=@citizenid', {['@citizenid'] = cid , ['@vin'] = os.time()})
                 else
                     local d1 = os.date("*t",   os.time())
                     local d2 = os.date("*t", sql[1].vin)
                     local zone_diff = os.difftime(os.time(d1), os.time(d2))
                     if(math.floor(zone_diff  / 86400) >= Config['Utils']["VIN"] ["VinDays"]) then
                         cb(true)
-                        SQL('UPDATE bropixel_boosting SET vin=@vin WHERE citizenid=@citizenid', {['@citizenid'] = cid , ['@vin'] = os.time()})
+                        SQL('UPDATE boost_boosts SET vin=@vin WHERE citizenid=@citizenid', {['@citizenid'] = cid , ['@vin'] = os.time()})
                     end
                 end
             end
@@ -308,18 +308,18 @@ elseif Config['General']["Core"] == "ESX" then
         local cid = xPlayer.identifier
     
         if xPlayer ~= nil then
-            local sql = SQL('SELECT * FROM bropixel_boosting WHERE citizenid=@citizenid', {['@citizenid'] = cid})
+            local sql = SQL('SELECT * FROM boost_boosts WHERE citizenid=@citizenid', {['@citizenid'] = cid})
             if(sql[1] ~= nil) then
                 if(sql[1].vin == 0) then
                     value = true
-                    SQL('UPDATE bropixel_boosting SET vin=@vin WHERE citizenid=@citizenid', {['@citizenid'] = cid , ['@vin'] = os.time()})
+                    SQL('UPDATE boost_boosts SET vin=@vin WHERE citizenid=@citizenid', {['@citizenid'] = cid , ['@vin'] = os.time()})
                 else
                     local d1 = os.date("*t",   os.time())
                     local d2 = os.date("*t", sql[1].vin)
                     local zone_diff = os.difftime(os.time(d1), os.time(d2))
                     if(math.floor(zone_diff  / 86400) >= Config['Utils']["VIN"] ["VinDays"]) then
                         cb(true)
-                        SQL('UPDATE bropixel_boosting SET vin=@vin WHERE citizenid=@citizenid', {['@citizenid'] = cid , ['@vin'] = os.time()})
+                        SQL('UPDATE boost_boosts SET vin=@vin WHERE citizenid=@citizenid', {['@citizenid'] = cid , ['@vin'] = os.time()})
                     end
                 end
             end
@@ -331,18 +331,18 @@ elseif Config['General']["Core"] == "NPBASE" then
         local user = exports[Config['CoreSettings']["NPBASE"]["Name"]]:getModule("Player"):GetUser(src)
         local cid = user:getCurrentCharacter().id
         if user ~= nil then
-            local sql = SQL('SELECT * FROM bropixel_boosting WHERE citizenid=@citizenid', {['@citizenid'] = cid})
+            local sql = SQL('SELECT * FROM boost_boosts WHERE citizenid=@citizenid', {['@citizenid'] = cid})
             if(sql[1] ~= nil) then
                 if(sql[1].vin == 0) then
                     value = true
-                    SQL('UPDATE bropixel_boosting SET vin=@vin WHERE citizenid=@citizenid', {['@citizenid'] = cid , ['@vin'] = os.time()})
+                    SQL('UPDATE boost_boosts SET vin=@vin WHERE citizenid=@citizenid', {['@citizenid'] = cid , ['@vin'] = os.time()})
                 else
                     local d1 = os.date("*t",   os.time())
                     local d2 = os.date("*t", sql[1].vin)
                     local zone_diff = os.difftime(os.time(d1), os.time(d2))
                     if(math.floor(zone_diff  / 86400) >= Config['Utils']["VIN"] ["VinDays"]) then
                         value = true
-                        SQL('UPDATE bropixel_boosting SET vin=@vin WHERE citizenid=@citizenid', {['@citizenid'] = cid , ['@vin'] = os.time()})
+                        SQL('UPDATE boost_boosts SET vin=@vin WHERE citizenid=@citizenid', {['@citizenid'] = cid , ['@vin'] = os.time()})
                     end
                 end
             end
